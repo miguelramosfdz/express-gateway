@@ -2,6 +2,7 @@ module.exports = {
   version: 'v1.0',
   init: function (pluginManifest) {
     pluginManifest.policies.push(require('./policies/example-policy'));
+    pluginManifest.conditions.push(require('./conditions/url-match'));
     pluginManifest.gatewayExtensions.push(require('./gateway-extensions/hello-eg'));
     pluginManifest.adminExtensions.push(require('./admin-extensions/hello-admin'));
 
