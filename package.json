@@ -116,8 +116,7 @@
     "supertest": "3.0.0",
     "supertest-session": "3.0.0",
     "tmp": "0.0.31",
-    "yeoman-test": "1.6.0",
-    "eg-example-plugin": "file:./examples/eg-example-plugin"
+    "yeoman-test": "1.6.0"
   },
   "yargs": {
     "boolean-negation": false
