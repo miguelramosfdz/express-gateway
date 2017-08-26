@@ -10,7 +10,7 @@ config.gatewayConfig = {
   }
 };
 
-describe.only('gateway condition with plugins', () => {
+describe('gateway condition with plugins', () => {
   let gatewaySrv;
   before('fires up a new gateway instance', function () {
     return gateway({
