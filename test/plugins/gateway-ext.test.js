@@ -1,5 +1,6 @@
 const assert = require('assert');
 const gateway = require('../../lib/gateway');
+const eventBus = require('../../lib/eventBus');
 const Config = require('../../lib/config/config');
 const request = require('supertest');
 
@@ -11,8 +12,11 @@ config.gatewayConfig = {
 };
 
 describe('gateway routing with plugins', () => {
-  let gatewaySrv;
+  let gatewaySrv, httpSrvFromEvent;
   before('fires up a new gateway instance', function () {
+    eventBus.on('http-ready', ({httpServer}) => {
+      httpSrvFromEvent = httpServer;
+    });
     return gateway({
       plugins: {
         gatewayExtensions: [function (gatewayExpressInstance) {
@@ -31,6 +35,10 @@ describe('gateway routing with plugins', () => {
       .then(res => {
         assert.ok(res.body.enabled);
       });
+  });
+  it('should fire http-ready event', () => {
+    assert.ok(httpSrvFromEvent);
+    assert.equal(httpSrvFromEvent, gatewaySrv);
   });
 
   after('close gateway srv', () => {
