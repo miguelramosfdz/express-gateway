@@ -1,48 +1,48 @@
-const assert = require('chai').assert;
-const gateway = require('../../lib/gateway');
-const Config = require('../../lib/config/config');
-const express = require('express');
+// const assert = require('chai').assert;
+// const gateway = require('../../lib/gateway');
+// const Config = require('../../lib/config/config');
+// const express = require('express');
 
-let config = new Config();
-config.gatewayConfig = {
-  http: {
-    port: 0
-  }
-};
+// let config = new Config();
+// config.gatewayConfig = {
+//   http: {
+//     port: 0
+//   }
+// };
 
-describe('gateway condition with plugins', () => {
-  let gatewaySrv;
-  before('fires up a new gateway instance', function () {
-    return gateway({
-      plugins: {
-        conditions: [{
-          name: 'test-condition',
-          handler: function (req, conditionConfig) {
-            assert.ok(conditionConfig.param1);
-            assert.equal(req.url, '/test');
-            return (conditionConfig.param1 === req.url);
-          }
-        }]},
-      config
-    }).then(srv => {
-      gatewaySrv = srv.app;
-      return srv;
-    });
-  });
+// describe('gateway condition with plugins', () => {
+//   let gatewaySrv;
+//   before('fires up a new gateway instance', function () {
+//     return gateway({
+//       plugins: {
+//         conditions: [{
+//           name: 'test-condition',
+//           handler: function (req, conditionConfig) {
+//             assert.ok(conditionConfig.param1);
+//             assert.equal(req.url, '/test');
+//             return (conditionConfig.param1 === req.url);
+//           }
+//         }]},
+//       config
+//     }).then(srv => {
+//       gatewaySrv = srv.app;
+//       return srv;
+//     });
+//   });
 
-  it('should  return false for param1 not matching url', function () {
-    let req = Object.create(express.request);
-    req.url = '/test';
-    assert.isFalse(req.matchEGCondition({ name: 'test-condition', param1: true }));
-  });
+//   it('should  return false for param1 not matching url', function () {
+//     let req = Object.create(express.request);
+//     req.url = '/test';
+//     assert.isFalse(req.matchEGCondition({ name: 'test-condition', param1: true }));
+//   });
 
-  it('should  return true for param1 matching url', function () {
-    let req = Object.create(express.request);
-    req.url = '/test';
-    assert.ok(req.matchEGCondition({ name: 'test-condition', param1: '/test' }));
-  });
+//   it('should  return true for param1 matching url', function () {
+//     let req = Object.create(express.request);
+//     req.url = '/test';
+//     assert.ok(req.matchEGCondition({ name: 'test-condition', param1: '/test' }));
+//   });
 
-  after('close gateway srv', () => {
-    gatewaySrv.close();
-  });
-});
+//   after('close gateway srv', () => {
+//     gatewaySrv.close();
+//   });
+// });
